@@ -3,12 +3,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.mattz.data.SeznamZlomku;
 import com.mattz.data.Zlomek;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class SeznamZlomkuTest {
     static SeznamZlomku seznamZlomku;
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    public void setUp() {
         seznamZlomku = new SeznamZlomku();
         seznamZlomku.pridatZlomek(new Zlomek(1,2));
         seznamZlomku.pridatZlomek(new Zlomek(2,3));
