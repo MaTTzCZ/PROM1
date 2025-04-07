@@ -6,19 +6,51 @@ import gui.objects.Square;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainWindow extends JFrame {
     private final List<AbstractObject> objekty = new ArrayList();
+    private GraphPanel graphPanel;
+    private JToolBar jToolBar  = new JToolBar();
+    ButtonGroup buttonGroup = new ButtonGroup();
+    private JToggleButton jButtonSquare =  new JToggleButton("Čtverec");
+    private JToggleButton jButtonCircle = new JToggleButton("Kruh");
+
 
     public MainWindow() {
         super("Vektorový editor");
         this.setDefaultCloseOperation(3);
-        this.add(new GraphPanel(this.objekty), "Center");
+        graphPanel = new GraphPanel(this.objekty);
+        this.add(graphPanel, BorderLayout.CENTER);
         this.initTestData();
         this.setSize(800, 600);
         this.setLocationRelativeTo((Component)null);
+
+        buttonGroup.add(jButtonCircle);
+        buttonGroup.add(jButtonSquare);
+
+        this.add(jToolBar, BorderLayout.NORTH);
+
+        jToolBar.add(jButtonSquare);
+        jToolBar.add(jButtonCircle);
+
+        graphPanel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if (jButtonSquare.isSelected()) {
+                        objekty.add(new Square(new Point(e.getX(), e.getY()), 50, Color.BLACK));
+                    }
+                    else if (jButtonCircle.isSelected()) {
+                        objekty.add(new Circle(new Point(e.getX(), e.getY()), 50, Color.BLACK));
+                    }
+                    graphPanel.repaint();
+                }
+
+            }
+        });
     }
 
     private void initTestData() {
