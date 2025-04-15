@@ -22,6 +22,9 @@ public class MainWindow extends JFrame {
     private JToggleButton jButtonTriangle = new JToggleButton("Trojúhelník");
     private JToggleButton jToggleButtonMovement =  new JToggleButton("Pohyb těles");
 
+    AbstractObject draggedObject;
+
+
 
 
 
@@ -66,35 +69,30 @@ public class MainWindow extends JFrame {
                     }
                     graphPanel.repaint();
                 }
-
             }
         });
-        final AbstractObject[] draggedObject = {null};
-
         graphPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (jToggleButtonMovement.isSelected()) {
-                    for (AbstractObject obj : objekty) {
-                        if (obj.contains(e.getX(), e.getY())) {
-                            draggedObject[0] = obj;
-                            break;
-                        }
-                    }
+                    draggedObject = objekty.stream()
+                            .filter(obj -> obj.contains(e.getX(), e.getY()))
+                            .findFirst()
+                            .orElse(null);
                 }
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                draggedObject[0] = null;
+                draggedObject = null;
             }
         });
 
         graphPanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                if (jToggleButtonMovement.isSelected() && draggedObject[0] != null) {
-                    draggedObject[0].setPosition(e.getX(), e.getY());
+                if (jToggleButtonMovement.isSelected() && draggedObject != null) {
+                    draggedObject.setPosition(e.getX(), e.getY());
                     graphPanel.repaint();
                 }
             }
