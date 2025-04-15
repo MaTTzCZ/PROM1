@@ -17,7 +17,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame() throws MalformedURLException, URISyntaxException {
         dataHandler = new DataHandler();
-
+        dataHandler.getMistnosti("J");
         this.setTitle("Prohlížeč rozvrhu místností");
         this.setSize(800, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,19 +29,19 @@ public class MainFrame extends JFrame {
         jToolBar.add(jComboBoxRooms);
         jToolBar.add(jButtonSubmit);
 
-        fillComboBoxes(dataHandler.getRooms());
+        //fillComboBoxes(dataHandler.getRooms());
 
         jButtonSubmit.addActionListener(e -> {
             String selectedFaculty = (String) jComboBoxFaculty.getSelectedItem();
             String selectedRoom = (String) jComboBoxRooms.getSelectedItem();
 
-            String[] returnData = dataHandler.getRoomData(selectedFaculty, selectedRoom);
-            if (returnData == null) {
-                JOptionPane.showMessageDialog(null, "Nepodařilo se získat data učebny", "Upozornění", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else {
-
-            }
+//            String[] returnData = dataHandler.getRoomData(selectedFaculty, selectedRoom);
+//            if (returnData == null) {
+//                JOptionPane.showMessageDialog(null, "Nepodařilo se získat data učebny", "Upozornění", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//            else {
+//
+//            }
         });
     }
 
